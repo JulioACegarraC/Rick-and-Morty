@@ -2,7 +2,7 @@ import Card from './Card';
 
 export default function Cards(props) {
    return (
-      <div style={{display: 'flex',justifyContent:'space-between'}}>
+      <div style={{display: 'flex',justifyContent:'space-between' , border: "5px solid green"} }>
          {props.characters.map(per => 
             <Card  
                key={per.id} 
@@ -13,7 +13,8 @@ export default function Cards(props) {
                originName={per.origin.name}
                originUrl={per.origin.url}
                image={per.image}
-               onClose={() => window.alert('Emulamos que se cierra la card')}/>
+               onClose={() => props.onClose(per.id)} 
+            />
          )}  
       </div>
    );
