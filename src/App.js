@@ -1,12 +1,11 @@
 import './App.css';
-//import axios from 'axios';
-//import Card from './components/Card.jsx';
+import About from './components/About';
+import Error from './components/Error';
 import Cards from './components/Cards.jsx';
-//import SearchBar from './components/SearchBar';
 import Nav from './components/Nav';
-//!Acabo de quitarle la importacion de la prop characters [ {pers 1} , {pers 2} ... {pers n}]
-// import characters from './data.js';
 import React, {useState} from 'react';
+import { Routes,Route } from 'react-router-dom';
+import Detail from './components/Detail';
 function App() {
    const [characters,setCharacters] = useState([]); 
 
@@ -55,28 +54,15 @@ function App() {
    }
 
    return (
-      <div className='App' style={{padding:"25px"}}>
+      <div>
          <Nav onSearch={onSearch} onRandom={onRandom} />
-         {/*<SearchBar onSearch={(characterID) => window.alert(characterID)} />
-         <div>
-            <Card
-               id={Rick.id} 
-               name={Rick.name}
-               status={Rick.status}
-               species={Rick.species}
-               gender={Rick.gender}
-               originName={Rick.origin.name}
-               originUrl={Rick.origin.url}
-               image={Rick.image}
-               onClose={() => window.alert('Emulamos que se cierra la card')}
-            />
-         </div> 
-         */}
-            <hr />
-         <div>
-            <Cards characters={characters} onClose={onClose} />
-            <hr />
-         </div>
+         <Routes>
+            <Route path='/' element = {<Cards characters={characters} onClose={onClose} />} />
+            <Route path='/about' element= {<About />}/>
+            <Route path='/detail/:id' element= {<Detail />}/>
+            <Route path='*' element= {<Error />}/>
+
+         </Routes>
       </div>
    );
 }

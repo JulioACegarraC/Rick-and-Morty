@@ -3,3 +3,7 @@
     /* width: 500px;
     height: 500px; */
 }
+.Active{
+    background-color: rgb(48, 6, 236);
+    text-size-adjust: 10px;
+}
