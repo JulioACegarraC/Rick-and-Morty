@@ -3,12 +3,17 @@ import About from './components/About';
 import Error from './components/Error';
 import Cards from './components/Cards.jsx';
 import Nav from './components/Nav';
-import React, {useState} from 'react';
-import { Routes,Route } from 'react-router-dom';
+import React, {useState,useEffect} from 'react';
+import { Routes,Route, useLocation, useNavigate } from 'react-router-dom';
 import Detail from './components/Detail';
+import Form from './components/Form';
 function App() {
-   const [characters,setCharacters] = useState([]); 
-
+   const [characters,setCharacters] = useState([]);
+   const [access,setAccess] = useState(false);
+   const EMAIL = "homerosimpson@gmail.com";
+   const PASSWORD = "mejorseriex100pre";
+   const navigate = useNavigate();
+ 
    function onSearch(id) {
       let arrayIds = characters.map(ele => ele.id)
       console.log(arrayIds[0]);//number
@@ -52,12 +57,30 @@ function App() {
          window.alert('¡Este personaje ya ha sido agregado!');
       }
    }
-
+   function login (userData) {
+      if (userData.email === EMAIL && userData.password === PASSWORD){
+         console.log(userData);
+         setAccess(true);
+         navigate("/home");
+      }
+   }
+   useEffect(() => {
+      !access && navigate('/');
+   },
+   [access]);
+   const location = useLocation().pathname;
+   function logOut () {
+         setAccess(false);
+   }
+   
+   
+   
    return (
       <div>
-         <Nav onSearch={onSearch} onRandom={onRandom} />
+         {location !== '/'? <Nav onSearch={onSearch} onRandom={onRandom} logOut={logOut}/>:null}
          <Routes>
-            <Route path='/' element = {<Cards characters={characters} onClose={onClose} />} />
+            <Route path='/' element = {<Form login={login} />} />
+            <Route path='/home' element = {<Cards characters={characters} onClose={onClose} />} />
             <Route path='/about' element= {<About />}/>
             <Route path='/detail/:id' element= {<Detail />}/>
             <Route path='*' element= {<Error />}/>

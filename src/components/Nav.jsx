@@ -6,7 +6,8 @@ export default function Nav(props) {
     return (
        <div className={styles.Container}>
          <button onClick={() => props.onRandom(826)}>Personaje Aleatorio</button>
-         <NavLink to = '/'  >Home</NavLink>
+         <button onClick={props.logOut}>Log Out</button>
+         <NavLink to = '/home'  >Home</NavLink>
          <NavLink to = '/about'  >About</NavLink>
          <SearchBar onSearch={props.onSearch} />
        </div>
