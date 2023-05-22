@@ -7,16 +7,24 @@
     box-shadow: 0;
 }
 .DivCardButton{
-    border: 1px solid rgb(242, 8, 8);
     display: flex;
     justify-content: flex-end;
-}
+} 
 .DivCardButton button {
     background-color: salmon;
     color: white;
     border: 0px;
     border-radius: 15px;
+    transition: width 2s;
+    width: 30px;
+    &:hover {
+        background-color: aqua;
+        width: 50px;
+        height: 17px;
+    }
 }
+
+
 .DivCardTitles {
     border: 1px solid rgb(242, 8, 8);
     text-align: center;

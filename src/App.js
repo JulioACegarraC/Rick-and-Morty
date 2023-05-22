@@ -11,14 +11,11 @@ function App() {
    const [characters,setCharacters] = useState([]);
    const [access,setAccess] = useState(false);
    const EMAIL = "homerosimpson@gmail.com";
-   const PASSWORD = "mejorseriex100pre";
+   const PASSWORD = "123456";
    const navigate = useNavigate();
  
    function onSearch(id) {
       let arrayIds = characters.map(ele => ele.id)
-      console.log(arrayIds[0]);//number
-      console.log(parseInt(id));//number
-      console.log((!arrayIds.includes(parseInt(id))))
       if (!arrayIds.includes(parseInt(id))){
          fetch(`https://rickandmortyapi.com/api/character/${id}`)
          .then((response) => response.json())
@@ -40,9 +37,6 @@ function App() {
       let id = Math.ceil(Math.random()* random);
       if (id === 0) id = 1;
       let arrayIds = characters.map(ele => ele.id)
-      console.log(arrayIds[0]);//number
-      console.log(parseInt(id));//number
-      console.log((!arrayIds.includes(parseInt(id))))
       if (!arrayIds.includes(parseInt(id))){
          fetch(`https://rickandmortyapi.com/api/character/${id}`)
          .then((response) => response.json())
@@ -59,7 +53,6 @@ function App() {
    }
    function login (userData) {
       if (userData.email === EMAIL && userData.password === PASSWORD){
-         console.log(userData);
          setAccess(true);
          navigate("/home");
       }
@@ -70,21 +63,18 @@ function App() {
    [access]);
    const location = useLocation().pathname;
    function logOut () {
-         setAccess(false);
+      console.log(location);
+      setAccess(false);
    }
-   
-   
-   
    return (
       <div>
          {location !== '/'? <Nav onSearch={onSearch} onRandom={onRandom} logOut={logOut}/>:null}
          <Routes>
-            <Route path='/' element = {<Form login={login} />} />
+            <Route exact path='/' element = {<Form login={login} />} />
             <Route path='/home' element = {<Cards characters={characters} onClose={onClose} />} />
             <Route path='/about' element= {<About />}/>
             <Route path='/detail/:id' element= {<Detail />}/>
             <Route path='*' element= {<Error />}/>
-
          </Routes>
       </div>
    );
