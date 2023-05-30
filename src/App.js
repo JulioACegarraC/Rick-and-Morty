@@ -7,7 +7,10 @@ import React, {useState,useEffect} from 'react';
 import { Routes,Route, useLocation, useNavigate } from 'react-router-dom';
 import Detail from './components/Detail';
 import Form from './components/Form';
-function App() {
+import Favorites from './components/Favorites';
+import { connect } from 'react-redux';
+import { removeFav } from './redux/actions';
+function App(props) {
    const [characters,setCharacters] = useState([]);
    const [access,setAccess] = useState(false);
    const EMAIL = "homerosimpson@gmail.com";
@@ -32,6 +35,11 @@ function App() {
    }
    const onClose = (id) =>{
       setCharacters(characters.filter(char => char.id !== id));
+      props.myFavorites?.forEach((fav) => {
+         if (fav.id === id) {
+            props.removeFav(id);
+         }
+      });
    }
    const onRandom = (random) =>{
       let id = Math.ceil(Math.random()* random);
@@ -57,15 +65,11 @@ function App() {
          navigate("/home");
       }
    }
-   useEffect(() => {
-      !access && navigate('/');
-   },
-   [access]);
    const location = useLocation().pathname;
    function logOut () {
-      console.log(location);
       setAccess(false);
    }
+   useEffect(() => {!access && navigate('/')},[access]);
    return (
       <div>
          {location !== '/'? <Nav onSearch={onSearch} onRandom={onRandom} logOut={logOut}/>:null}
@@ -73,11 +77,23 @@ function App() {
             <Route exact path='/' element = {<Form login={login} />} />
             <Route path='/home' element = {<Cards characters={characters} onClose={onClose} />} />
             <Route path='/about' element= {<About />}/>
+            <Route path='/favorites' element= {<Favorites onClose={onClose}/>}/>
             <Route path='/detail/:id' element= {<Detail />}/>
-            <Route path='*' element= {<Error />}/>
+            <Route path='*' element= {<Error access={access} setAccess={setAccess}/>}/>
          </Routes>
       </div>
    );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+   return {
+       myFavorites: state.myFavorites
+   }
+};
+
+const mapDispatchToProps = (dispatch) => {
+   return {
+      removeFav: (id) => dispatch(removeFav(id))
+   }
+}
+export default connect (mapStateToProps, mapDispatchToProps)(App);

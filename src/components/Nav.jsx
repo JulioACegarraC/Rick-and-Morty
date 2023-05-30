@@ -8,6 +8,7 @@ export default function Nav(props) {
          <button onClick={() => props.onRandom(826)}>Personaje Aleatorio</button>
          <button onClick={props.logOut}>Log Out</button>
          <NavLink to = '/home'  >Home</NavLink>
+         <NavLink to = '/favorites' >Favorities</NavLink>
          <NavLink to = '/about'  >About</NavLink>
          <SearchBar onSearch={props.onSearch} />
        </div>

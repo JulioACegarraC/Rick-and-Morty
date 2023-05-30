@@ -12,7 +12,7 @@ export default function Cards(props) {
                species={per.species}
                gender={per.gender}
                originName={per.origin.name}
-               originUrl={per.origin.url}
+               locationName={per.location.name}
                image={per.image}
                onClose={() => props.onClose(per.id)} 
             />

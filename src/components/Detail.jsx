@@ -27,6 +27,8 @@ export default function Detail(props) {
          <h2>Status: {character.status}</h2>
          <h3>Species: {character.species}</h3>
          <h3>Gender: {character.gender}</h3>
+         <h3>Origin: {character.origin?character.origin.name:null}</h3>
+         <h3>Location: {character.location?character.location.name:null}</h3>
          <img src={character.image} alt={character.name} />
       </div>
     );
