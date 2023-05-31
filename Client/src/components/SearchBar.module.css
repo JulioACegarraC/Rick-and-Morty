@@ -1,0 +1,22 @@
+.DivSearchBar{
+    border: 5px solid rgb(115, 255, 0);
+    display: flex;
+    margin: auto;
+    width: 50%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.DivSearchBar input {
+    border: 1px solid rgb(242, 8, 8);
+    border-radius: 5px;
+    height: 20px;
+}
+.DivSearchBar button {
+    border: 1px solid rgb(242, 8, 8);
+    border-radius: 5px;
+    height: 20px;
+    background-color: darkslategray;
+    color: aliceblue;
+    font-size: medium;
+    padding: 0 10px 0 10px;
+}
