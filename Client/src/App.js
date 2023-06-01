@@ -47,7 +47,8 @@ function App(props) {
       if (id === 0) id = 1;
       let arrayIds = characters.map(ele => ele.id)
       if (!arrayIds.includes(parseInt(id))){
-         fetch(`https://rickandmortyapi.com/api/character/${id}`)
+
+         fetch(`http://localhost:3001/rickandmorty/character/${id}`)
          .then((response) => response.json())
          .then(( data ) => {
             if (data.name) {
