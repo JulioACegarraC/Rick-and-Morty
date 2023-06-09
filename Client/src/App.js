@@ -10,11 +10,12 @@ import Form from './components/Form';
 import Favorites from './components/Favorites';
 import { connect } from 'react-redux';
 import { removeFav } from './redux/actions';
+import axios from 'axios';
 function App(props) {
    const [characters,setCharacters] = useState([]);
    const [access,setAccess] = useState(false);
-   const EMAIL = "homerosimpson@gmail.com";
-   const PASSWORD = "123456";
+   //const EMAIL = "homerosimpson@gmail.com";
+   //const PASSWORD = "123456";
    const navigate = useNavigate();
  
    function onSearch(id) {
@@ -22,7 +23,7 @@ function App(props) {
       if (!arrayIds.includes(parseInt(id))){
          //fetch(`https://rickandmortyapi.com/api/character/${id}`)
          fetch(`http://localhost:3001/rickandmorty/character/${id}`)
-         .then((response) => response.json())
+         //.then((response) => response.json())
          .then(( data ) => {
             if (data.name) {
                setCharacters((oldChars) => [...oldChars, data]);
@@ -62,10 +63,14 @@ function App(props) {
       }
    }
    function login (userData) {
-      if (userData.email === EMAIL && userData.password === PASSWORD){
-         setAccess(true);
-         navigate("/home");
-      }
+      const { email, password } = userData;
+      const URL = 'http://localhost:3001/rickandmorty/login/';
+      axios( `http://localhost:3001/rickandmorty/login/?email=${email}&password=${password}`)
+         .then(({ data }) => {
+            const { access } = data;
+            setAccess(data);
+            access && navigate('/home');
+         });
    }
    const location = useLocation().pathname;
    function logOut () {
