@@ -3,7 +3,8 @@ import { ADD_FAV, REMOVE_FAV, ORDER, FILTER } from "./types";
 
 const initialState = {
     myFavorites: [],
-    allCharacters:[]
+    allCharacters:[],
+    errors : {}
 }
 export default function rootReducer ( state = initialState, {type,payload}) {
     switch (type) {
@@ -11,20 +12,16 @@ export default function rootReducer ( state = initialState, {type,payload}) {
             return {
                 ...state, 
                 myFavorites: payload, 
-                allCharacters: payload 
+                allCharacters: payload,
+                errors:{} 
             }
         case REMOVE_FAV:
             return { 
                 ...state, 
-                myFavorites: payload 
+                myFavorites: payload,
+                errors : {} 
             };
-            // const filtered = state.myFavorites.filter(
-            //     fav => fav.id !== payload
-            //     )
-            // return {
-            //     ...state,
-            //     myFavorites: filtered
-            // }
+
         case FILTER:
             let filteredF = [];
             if (payload !== 'All'){
@@ -52,7 +49,13 @@ export default function rootReducer ( state = initialState, {type,payload}) {
                     ...state,
                     myFavorites: order
                 }
-        default:
+        case "ERROR":
+            return {
+                ...state,
+                errors:payload
+            }
+
+                default:
             return { ...state }
     }
 }
