@@ -1,24 +1,9 @@
-//*const getCharById = require('./controllers/getCharById');
-//!const login = require('./controllers/login');
 const { postFav , deleteFav } = require('./controllers/handleFavorites');
 const express = require('express');
 const router = require ('./routes/index');
 const server = express();
 const PORT = 3001;
-//? Mi servidor esta funcionando
-//?server.get("/", (req, res, next) => {
-//?   res.status(200).send("Julio y Pablo...")
-//?})
-
-//* El getCharById esta funcionando
-//* server.get("/rickandmorty/character/:id", getCharById)
-
-//! El login esta funcionando
-//!server.get("/rickandmorty/login/", login)
-
-//? No pude probar el put no me reconoce el json
-// server.post("/rickandmorty/fav/", postFav);
-// server.delete("/rickandmorty/fav/:id", deleteFav);
+const { conn } = require ("./DB_connection");
 
 server.use((req, res, next) => {
    res.header('Access-Control-Allow-Origin', '*');
@@ -37,6 +22,7 @@ server.use((req, res, next) => {
 server.use(express.json());
 server.use("/rickandmorty", router);
 
-server.listen(PORT, () => {
+server.listen(PORT,async () => {
+   await conn.sync({ force: true }),
    console.log('Server raised in port: ' + PORT);
 });
